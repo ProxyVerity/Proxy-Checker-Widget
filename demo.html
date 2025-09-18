@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proxylib Widget Demo</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 24px; background: #f6f7f9; color: #111827; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 20px; }
+    .card h2 { margin: 0; font-size: 18px; }
+    .card .body { padding: 16px; }
+    pre { overflow: auto; -webkit-overflow-scrolling: touch; }
+    pre code { display: block; white-space: pre; }
+    code { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; padding: 2px 6px; }
+    .row { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 900px){ .row { grid-template-columns: 1fr 1fr; } }
+  </style>
+  <!-- This page is for local preview. Run: php -S localhost:8080 and open /widget/demo.html -->
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="body">
+        <h2>Proxylib Proxy Checker Widget — Demo</h2>
+        <p>Preview how the embeddable widget renders and behaves. The snippets below load <code>/widget/embed.js</code> which inserts an iframe with the widget.</p>
+        <p>Endpoints used: <code>/backend/add_to_queue.php</code> and <code>/result.php?hash=...</code>.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <div class="body">
+          <h2>Light Theme (default)</h2>
+          <p>Width 100%, height 520px, results open in-place (inside iframe).</p>
+          <div id="demo-light"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="body" style="background:#0b0f1a; color:#e5e7eb; border-radius:8px;">
+          <h2>Dark Theme</h2>
+          <p>Width 100%, height 520px, results open in-place (inside iframe).</p>
+          <div id="demo-dark"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="body">
+        <h2>Embed Examples</h2>
+        <p>Replace <code>panel.proxylib.com</code> with your host.</p>
+        <h3 style="margin:8px 0 6px; font-size:16px;">Minimal (required params only)</h3>
+<pre><code>&lt;script src="https://panel.proxylib.com/widget/embed.js"&gt;&lt;/script&gt;</code></pre>
+        <h3 style="margin:12px 0 6px; font-size:16px;">Medium (recommended options)</h3>
+<pre><code>&lt;script src="https://panel.proxylib.com/widget/embed.js"
+        async
+        data-width="100%"
+        data-height="520"
+        data-theme="light"&gt;&lt;/script&gt;</code></pre>
+        <h3 style="margin:12px 0 6px; font-size:16px;">Full (all options)</h3>
+<pre><code>&lt;script src="https://panel.proxylib.com/widget/embed.js"
+        async
+        data-width="100%"
+        data-height="520"
+        data-theme="light"
+        data-threshold="50"
+        data-chunk-size="50"
+        data-open-results="0"&gt;&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Light demo instance -->
+  <script src="/widget/embed.js"
+          async
+          data-width="100%"
+          data-height="520"
+          data-theme="light"
+          data-threshold="50"
+          data-chunk-size="50"
+          data-open-results="0"></script>
+
+  <!-- Dark demo instance -->
+  <script src="/widget/embed.js"
+          async
+          data-width="100%"
+          data-height="520"
+          data-theme="dark"
+          data-threshold="50"
+          data-chunk-size="50"
+          data-open-results="0"></script>
+</body>
+</html>
