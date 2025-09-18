@@ -1,24 +1,28 @@
-# ProxyLib Widget
+# 🔧 ProxyLib Widget
 
 An embeddable proxy checker widget that allows websites to integrate ProxyLib's proxy testing functionality directly into their pages.
 
-## Overview
+🚀 **Demo page**: https://proxylib.github.io/widget/
+
+🔍 **Live proxy checker**: https://proxylib.com/proxy-checker/
+
+## 📋 Overview
 
 The ProxyLib Widget is a lightweight, embeddable solution that provides a seamless way for users to check proxy server functionality without leaving your website. It consists of a JavaScript embed script and a PHP-based widget interface that communicates with the ProxyLib backend.
 
-## Features
+## ✨ Features
 
-- **Easy Integration**: Single script tag embedding
-- **Responsive Design**: Adapts to different screen sizes and container widths
-- **Theme Support**: Light and dark themes
-- **Batch Processing**: Handles large proxy lists automatically
-- **Real-time Results**: Dynamic result display with progress tracking
-- **Iframe Security**: Sandboxed iframe with secure communication
-- **Mobile Optimized**: Touch-friendly interface for mobile devices
+- **🔌 Easy Integration**: Single script tag embedding
+- **📱 Responsive Design**: Adapts to different screen sizes and container widths
+- **🎨 Theme Support**: Light and dark themes
+- **⚡ Batch Processing**: Handles large proxy lists automatically
+- **📊 Real-time Results**: Dynamic result display with progress tracking
+- **🔒 Iframe Security**: Sandboxed iframe with secure communication
+- **📲 Mobile Optimized**: Touch-friendly interface for mobile devices
 
-## Quick Start
+## 🚀 Quick Start
 
-### Basic Embedding
+### 🔧 Basic Embedding
 
 Add this script tag to your HTML page:
 
@@ -26,7 +30,7 @@ Add this script tag to your HTML page:
 <script src="https://panel.proxylib.com/widget/embed.js"></script>
 ```
 
-### Recommended Configuration
+### ⭐ Recommended Configuration
 
 ```html
 <script src="https://panel.proxylib.com/widget/embed.js"
@@ -36,7 +40,7 @@ Add this script tag to your HTML page:
         data-theme="light"></script>
 ```
 
-### Complete Configuration
+### 🔧 Complete Configuration
 
 ```html
 <script src="https://panel.proxylib.com/widget/embed.js"
@@ -49,7 +53,7 @@ Add this script tag to your HTML page:
         data-open-results="0"></script>
 ```
 
-## Configuration Options
+## ⚙️ Configuration Options
 
 The widget supports several data attributes for customization:
 
@@ -62,50 +66,50 @@ The widget supports several data attributes for customization:
 | `data-chunk-size` | number | `50` | Number of proxies per chunk for large lists |
 | `data-open-results` | number | `1` | Open results in new tab (`1`) or same frame (`0`) |
 
-## Themes
+## 🎨 Themes
 
-### Light Theme
+### ☀️ Light Theme
 - Clean, bright interface
 - Suitable for most websites
 - Default theme
 
-### Dark Theme
+### 🌙 Dark Theme
 - Dark background with light text
 - Ideal for dark-themed websites
 - Set with `data-theme="dark"`
 
-## How It Works
+## 🔄 How It Works
 
-1. **Embed**: The JavaScript embed script creates an iframe containing the widget
-2. **Input**: Users enter proxy lists in `IP:Port` format (with optional protocol prefixes)
-3. **Processing**:
+1. **🔌 Embed**: The JavaScript embed script creates an iframe containing the widget
+2. **📝 Input**: Users enter proxy lists in `IP:Port` format (with optional protocol prefixes)
+3. **⚡ Processing**:
    - Small lists (≤ threshold): Processed immediately
    - Large lists: Split into chunks and processed sequentially
-4. **Results**: Links to result pages are displayed within the widget
-5. **Communication**: Secure postMessage communication between iframe and parent
+4. **📊 Results**: Links to result pages are displayed within the widget
+5. **💬 Communication**: Secure postMessage communication between iframe and parent
 
-## Technical Details
+## 🛠️ Technical Details
 
-### Security Features
+### 🔒 Security Features
 
-- **Iframe Sandbox**: Restricts widget capabilities for security
-- **Referrer Policy**: `no-referrer` to protect privacy
-- **Origin Validation**: Ensures secure cross-frame communication
-- **Token-based Communication**: Prevents message hijacking
+- **🛡️ Iframe Sandbox**: Restricts widget capabilities for security
+- **🔐 Referrer Policy**: `no-referrer` to protect privacy
+- **✅ Origin Validation**: Ensures secure cross-frame communication
+- **🎟️ Token-based Communication**: Prevents message hijacking
 
-### Auto-Resizing
+### 📏 Auto-Resizing
 
 The widget automatically adjusts its height based on content using:
-- `ResizeObserver` API for modern browsers
-- `MutationObserver` for content changes
-- Fallback event listeners for compatibility
+- 🔍 `ResizeObserver` API for modern browsers
+- 👀 `MutationObserver` for content changes
+- 🔄 Fallback event listeners for compatibility
 
-## Browser Support
+## 🌐 Browser Support
 
-- **Modern Browsers**: Full functionality with all features
-- **Legacy Support**: Graceful degradation for older browsers
-- **Mobile**: Optimized touch interface and responsive design
+- **🚀 Modern Browsers**: Full functionality with all features
+- **🔧 Legacy Support**: Graceful degradation for older browsers
+- **📱 Mobile**: Optimized touch interface and responsive design
 
-## Support
+## 💬 Support
 
 For support and documentation, visit [ProxyLib.com](https://proxylib.com)
