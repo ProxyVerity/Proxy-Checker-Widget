@@ -7,7 +7,12 @@ An embeddable proxy checker widget that allows websites to integrate ProxyLib's 
 🔍 **Live proxy checker**: https://proxylib.com/proxy-checker/
 
 
-https://proxylib.github.io/Proxy-Checker-Widget/demo.mp4
+## 📺 Demo
+
+<video width="600" controls>
+  <source src="https://github.com/ProxyLib/Proxy-Checker-Widget/raw/master/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ## 📋 Overview
 
