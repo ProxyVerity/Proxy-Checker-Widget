@@ -2,7 +2,7 @@
 
 An embeddable proxy checker widget that allows websites to integrate ProxyLib's proxy testing functionality directly into their pages.
 
-🚀 **Demo page**: https://proxylib.github.io/widget/
+🚀 **Demo page**: https://proxylib.github.io/Proxy-Checker-Widget/
 
 🔍 **Live proxy checker**: https://proxylib.com/proxy-checker/
 
