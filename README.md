@@ -6,6 +6,9 @@ An embeddable proxy checker widget that allows websites to integrate ProxyLib's 
 
 🔍 **Live proxy checker**: https://proxylib.com/proxy-checker/
 
+
+https://proxylib.github.io/Proxy-Checker-Widget/demo.mp4
+
 ## 📋 Overview
 
 The ProxyLib Widget is a lightweight, embeddable solution that provides a seamless way for users to check proxy server functionality without leaving your website. It consists of a JavaScript embed script and a PHP-based widget interface that communicates with the ProxyLib backend.
