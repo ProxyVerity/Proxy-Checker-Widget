@@ -1,10 +1,10 @@
-# 🔧 ProxyLib Widget
+# 🔧 ProxyVerity Widget
 
-An embeddable proxy checker widget that allows websites to integrate ProxyLib's proxy testing functionality directly into their pages.
+An embeddable proxy checker widget that allows websites to integrate ProxyVerity's proxy testing functionality directly into their pages.
 
-🚀 **Demo page**: https://proxylib.github.io/Proxy-Checker-Widget/
+🚀 **Demo page**: https://proxyverity.github.io/Proxy-Checker-Widget/
 
-🔍 **Live proxy checker**: https://proxylib.com/proxy-checker/
+🔍 **Live proxy checker**: https://proxyverity.com/proxy-checker/
 
 
 ## 📺 Demo
@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/7d6edebe-81af-4ac7-94f2-29a9e3b7dbd7
 
 ## 📋 Overview
 
-The ProxyLib Widget is a lightweight, embeddable solution that provides a seamless way for users to check proxy server functionality without leaving your website. It consists of a JavaScript embed script and a PHP-based widget interface that communicates with the ProxyLib backend.
+The ProxyVerity Widget is a lightweight, embeddable solution that provides a seamless way for users to check proxy server functionality without leaving your website. It consists of a JavaScript embed script and a PHP-based widget interface that communicates with the ProxyVerity backend.
 
 ## ✨ Features
 
@@ -32,13 +32,13 @@ The ProxyLib Widget is a lightweight, embeddable solution that provides a seamle
 Add this script tag to your HTML page:
 
 ```html
-<script src="https://panel.proxylib.com/widget/embed.js"></script>
+<script src="https://panel.proxyverity.com/widget/embed.js"></script>
 ```
 
 ### ⭐ Recommended Configuration
 
 ```html
-<script src="https://panel.proxylib.com/widget/embed.js"
+<script src="https://panel.proxyverity.com/widget/embed.js"
         async
         data-width="100%"
         data-height="520"
@@ -48,7 +48,7 @@ Add this script tag to your HTML page:
 ### 🔧 Complete Configuration
 
 ```html
-<script src="https://panel.proxylib.com/widget/embed.js"
+<script src="https://panel.proxyverity.com/widget/embed.js"
         async
         data-width="100%"
         data-height="520"
@@ -117,4 +117,4 @@ The widget automatically adjusts its height based on content using:
 
 ## 💬 Support
 
-For support and documentation, visit [ProxyLib.com](https://proxylib.com)
+For support and documentation, visit [ProxyVerity.com](https://proxyverity.com)
