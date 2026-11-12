@@ -1,0 +1,38 @@
+{
+    "name": "proxyverity/proxy-checker-widget",
+    "description": "Embeddable proxy checker widget: one script tag puts a working HTTP/HTTPS/SOCKS proxy checker on your page. No server, no account, no build step.",
+    "keywords": [
+        "proxy",
+        "proxy-checker",
+        "proxy-tester",
+        "proxy-list",
+        "proxy-validator",
+        "socks5",
+        "socks4",
+        "http-proxy",
+        "widget",
+        "embed"
+    ],
+    "homepage": "https://proxyverity.com/proxy-checker-widget/",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ProxyVerity",
+            "homepage": "https://proxyverity.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ProxyVerity/Proxy-Checker-Widget/issues",
+        "docs": "https://proxyverity.com/proxy-checker-widget/"
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProxyVerity\\Widget\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

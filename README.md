@@ -27,6 +27,49 @@ tag.
 The widget appears where the tag is, followed by a short credit line. That
 line is the condition of use — see below.
 
+## Install from a package registry
+
+The tag above is all you need — these packages only build it for you and
+contain no copy of the loader. The checker always runs from
+`api.proxyverity.com`, so a fix on our side reaches you without a release
+here.
+
+### npm
+
+```sh
+npm install proxyverity-widget
+```
+
+```js
+import { mount } from 'proxyverity-widget';
+
+mount('#checker', { theme: 'auto', accent: '#ff6600', radius: 12 });
+```
+
+`createEmbedScript(options)` returns the element without inserting it, and
+`embedTag(options)` returns the snippet as a string for server-side rendering.
+
+### Composer
+
+```sh
+composer require proxyverity/proxy-checker-widget
+```
+
+```php
+use ProxyVerity\Widget\Embed;
+
+echo Embed::tag(['theme' => 'auto', 'accent' => '#ff6600', 'radius' => 12]);
+```
+
+Option names are the camelCase form of the attributes in [Options](#options):
+`chunkSize` for `data-chunk-size`, and so on. Unknown keys are ignored rather
+than rendered. Values are passed through and validated on our side, where an
+invalid one falls back to the theme's default.
+
+Both packages are MIT-licensed. The credit line described below is a condition
+of using the hosted widget, not of using this code.
+
+
 ## The credit line
 
 The widget adds this underneath itself, in your page:
