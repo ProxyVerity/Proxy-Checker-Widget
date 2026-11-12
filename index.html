@@ -1,95 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ProxyVerity Widget Demo</title>
-  <style>
-    body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 24px; background: #f6f7f9; color: #111827; }
-    .container { max-width: 960px; margin: 0 auto; }
-    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 20px; }
-    .card h2 { margin: 0; font-size: 18px; }
-    .card .body { padding: 16px; }
-    pre { overflow: auto; -webkit-overflow-scrolling: touch; }
-    pre code { display: block; white-space: pre; }
-    code { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; padding: 2px 6px; }
-    .row { display: grid; grid-template-columns: 1fr; gap: 16px; }
-    @media (min-width: 900px){ .row { grid-template-columns: 1fr 1fr; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxy Checker Widget — build it, copy it, embed it</title>
+<meta name="description" content="Build a proxy checker widget for your site: pick the theme and colours, see it live, copy the one-line snippet. Free, no account, no backend on your side.">
+
+<!--
+  No <link rel="canonical"> here, on purpose.
+
+  An earlier plan had this page canonicalised to the documentation page on
+  proxyverity.com so the two would not compete. That would have been
+  self-defeating: a page declared a duplicate is not indexed on its own
+  account, and this is the one page on a free host that gives a real,
+  followed link. The competition is avoided by not being a duplicate — the
+  documentation page is reference material, this is an interactive builder.
+  Different content, so nothing to consolidate.
+-->
+
+<style>
+  :root {
+    --ink: #0f172a; --muted: #5b6577; --line: #e4e7ec; --bg: #f7f8fa;
+    --card: #ffffff; --brand: #2563eb; --brand-ink: #1b4bc0; --code: #0b1220;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
+  header { background: var(--card); border-bottom: 1px solid var(--line); padding: 44px 0 38px; }
+  h1 { margin: 0 0 12px; font-size: 32px; line-height: 1.2; letter-spacing: -0.02em; }
+  h2 { margin: 44px 0 14px; font-size: 22px; letter-spacing: -0.01em; }
+  h3 { margin: 24px 0 8px; font-size: 16px; }
+  p { margin: 0 0 14px; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 70ch; }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+  a { color: var(--brand); }
+  a:hover { color: var(--brand-ink); }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 20px; margin: 0 0 20px;
+  }
+  pre {
+    margin: 0; background: var(--code); color: #e6edf7; border-radius: 10px;
+    padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.55;
+  }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  p code, li code, td code {
+    background: #eef1f5; border: 1px solid var(--line); border-radius: 5px;
+    padding: 1px 5px; font-size: 13px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  .builder { display: grid; gap: 20px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .builder { grid-template-columns: 300px 1fr; } }
+  .controls { display: grid; gap: 14px; align-content: start; }
+  .field { display: grid; gap: 5px; }
+  .field > span { font-size: 13px; font-weight: 600; }
+  select, input[type=text], input[type=number] {
+    font: inherit; font-size: 14px; padding: 7px 9px;
+    border: 1px solid var(--line); border-radius: 8px; background: #fff; color: inherit;
+  }
+  input[type=color] {
+    width: 100%; height: 34px; padding: 2px; border: 1px solid var(--line);
+    border-radius: 8px; background: #fff;
+  }
+  .pair { display: grid; grid-template-columns: 1fr 70px; gap: 8px; align-items: center; }
+  button {
+    font: inherit; font-weight: 600; font-size: 14px; cursor: pointer;
+    background: var(--brand); color: #fff; border: 0; border-radius: 9px; padding: 9px 14px;
+  }
+  button:hover { background: var(--brand-ink); }
+  button.ghost { background: #eef1f5; color: var(--ink); }
+  button.ghost:hover { background: #e4e8ee; }
+  .snippet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 8px; }
+  .preview-stage { border: 1px dashed var(--line); border-radius: 10px; padding: 16px; background: #fff; }
+  .stage-note { margin: 10px 0 0; font-size: 13px; }
+  .grid2 { display: grid; gap: 20px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+  .dark-stage { background: #0b0f1a; color: #e5e7eb; border-color: #1f2937; }
+  .callout { border-left: 3px solid var(--brand); padding: 2px 0 2px 14px; }
+  footer { border-top: 1px solid var(--line); margin-top: 52px; padding: 26px 0 44px; font-size: 14px; color: var(--muted); }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <div class="body">
-        <h2>ProxyVerity Proxy Checker Widget — Demo</h2>
-        <p>Preview how the embeddable widget renders and behaves. The snippets below load <code>/widget/embed.js</code> which inserts an iframe with the widget.</p>
-        <p>Endpoints used: <code>/backend/add_to_queue.php</code> and <code>/result.php?hash=...</code>.</p>
 
-        <p>You can see the proxy checker in action at <a href="https://proxyverity.com/proxy-checker/">https://proxyverity.com/proxy-checker/</a></p>
-      </div>
+<header>
+  <div class="wrap">
+    <h1>Put a proxy checker on your own site</h1>
+    <p class="lead">
+      One <code>&lt;script&gt;</code> tag. Your visitors paste proxies, we check them on our
+      side, results open on a page they can share. Free, no account, nothing to install on
+      your server.
+    </p>
+    <p class="small muted">
+      Reference documentation:
+      <a href="https://proxyverity.com/proxy-checker-widget/">proxyverity.com/proxy-checker-widget</a>
+      · hosted checker:
+      <a href="https://proxyverity.com/proxy-checker/">proxyverity.com/proxy-checker</a>
+    </p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <h2>Build it</h2>
+  <p class="muted">
+    Change anything below and the widget on the right changes with it. The snippet updates
+    as you go — copy it when it looks right.
+  </p>
+
+  <div class="card builder">
+    <div class="controls">
+      <label class="field"><span>Theme</span>
+        <select id="c-theme">
+          <option value="light" selected>light</option>
+          <option value="dark">dark</option>
+          <option value="auto">auto — follow the visitor's OS</option>
+        </select>
+      </label>
+
+      <label class="field"><span>Accent</span>
+        <div class="pair">
+          <input type="color" id="c-accent" value="#2563eb">
+          <button type="button" class="ghost" data-clear="accent">reset</button>
+        </div>
+      </label>
+
+      <label class="field"><span>Background</span>
+        <div class="pair">
+          <input type="color" id="c-bg" value="#ffffff">
+          <button type="button" class="ghost" data-clear="bg">reset</button>
+        </div>
+      </label>
+
+      <label class="field">
+        <span><input type="checkbox" id="c-transparent"> transparent background</span>
+      </label>
+
+      <label class="field"><span>Text</span>
+        <div class="pair">
+          <input type="color" id="c-fg" value="#222222">
+          <button type="button" class="ghost" data-clear="fg">reset</button>
+        </div>
+      </label>
+
+      <label class="field"><span>Borders</span>
+        <div class="pair">
+          <input type="color" id="c-border" value="#e5e7eb">
+          <button type="button" class="ghost" data-clear="border">reset</button>
+        </div>
+      </label>
+
+      <label class="field"><span>Corner radius: <b id="c-radius-out">6</b> px</span>
+        <input type="range" id="c-radius" min="0" max="24" value="6">
+      </label>
+
+      <label class="field"><span>Typeface</span>
+        <select id="c-font">
+          <option value="sans" selected>sans — Arial (default)</option>
+          <option value="system">system — the visitor's UI font</option>
+          <option value="serif">serif</option>
+          <option value="mono">mono</option>
+        </select>
+      </label>
+
+      <label class="field"><span>Width</span>
+        <input type="text" id="c-width" value="100%">
+      </label>
+
+      <label class="field"><span>Height</span>
+        <input type="number" id="c-height" value="520" min="320" max="3000" step="10">
+      </label>
+
+      <label class="field"><span>Credit line</span>
+        <select id="c-credit">
+          <option value="below" selected>below the widget</option>
+          <option value="above">above the widget</option>
+        </select>
+      </label>
+
+      <label class="field"><span>Credit alignment</span>
+        <select id="c-credit-align">
+          <option value="left" selected>left</option>
+          <option value="center">center</option>
+          <option value="right">right</option>
+        </select>
+      </label>
+
+      <button type="button" class="ghost" id="c-reset">Reset everything</button>
     </div>
 
-    <div class="row">
-      <div class="card">
-        <div class="body">
-          <h2>Light Theme (default)</h2>
-          <p>Width 100%, height 520px, results open in-place (inside iframe).</p>
-          <div id="demo-light"></div>
-        </div>
+    <div>
+      <div class="snippet-head">
+        <h3 style="margin:0">Your snippet</h3>
+        <button type="button" id="copy">Copy</button>
       </div>
+      <pre><code id="snippet"></code></pre>
 
-      <div class="card">
-        <div class="body" style="background:#0b0f1a; color:#e5e7eb; border-radius:8px;">
-          <h2>Dark Theme</h2>
-          <p>Width 100%, height 520px, results open in-place (inside iframe).</p>
-          <div id="demo-dark"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="body">
-        <h2>Embed Examples</h2>
-        <p>Replace <code>panel.proxyverity.com</code> with your host.</p>
-        <h3 style="margin:8px 0 6px; font-size:16px;">Minimal (required params only)</h3>
-<pre><code>&lt;script src="https://panel.proxyverity.com/widget/embed.js"&gt;&lt;/script&gt;</code></pre>
-        <h3 style="margin:12px 0 6px; font-size:16px;">Medium (recommended options)</h3>
-<pre><code>&lt;script src="https://panel.proxyverity.com/widget/embed.js"
-        async
-        data-width="100%"
-        data-height="520"
-        data-theme="light"&gt;&lt;/script&gt;</code></pre>
-        <h3 style="margin:12px 0 6px; font-size:16px;">Full (all options)</h3>
-<pre><code>&lt;script src="https://panel.proxyverity.com/widget/embed.js"
-        async
-        data-width="100%"
-        data-height="520"
-        data-theme="light"
-        data-threshold="50"
-        data-chunk-size="50"
-        data-open-results="0"&gt;&lt;/script&gt;</code></pre>
-      </div>
+      <h3>Live preview</h3>
+      <div class="preview-stage" id="stage"></div>
+      <p class="stage-note muted">
+        This is the real widget from <code>api.proxyverity.com</code>, not a picture of one.
+        Paste a proxy and press the button if you want to see the whole path.
+      </p>
     </div>
   </div>
 
-  <!-- Light demo instance -->
-  <script src="https://panel.proxyverity.com/widget/embed.js"
-          async
-          data-width="100%"
-          data-height="520"
-          data-theme="light"
-          data-threshold="50"
-          data-chunk-size="50"
-          data-open-results="0"></script>
+  <h2>The credit line</h2>
+  <div class="card">
+    <p>
+      The widget adds one short line underneath itself, in your page:
+    </p>
+    <p class="callout">
+      Proxy checker by <a href="https://proxyverity.com/">ProxyVerity</a>
+    </p>
+    <p>
+      <strong>Keeping it visible is the condition of use.</strong> That is the whole deal: the
+      widget is free, and the credit is what it costs. It is an ordinary line of text with an
+      ordinary link, and it takes your page's own colour and typeface — it inherits them, so it
+      reads as part of your design rather than a sticker on top of it. You can move it above the
+      widget and align it however you like.
+    </p>
+    <p class="small muted">
+      What you may not do is hide it, shrink it below legibility or make it transparent. That is
+      not a technical restriction — you could do it in two lines of CSS — it is the one thing we
+      ask in return, and it is also what Google expects of an attribution link.
+    </p>
+  </div>
 
-  <!-- Dark demo instance -->
-  <script src="https://panel.proxyverity.com/widget/embed.js"
-          async
-          data-width="100%"
-          data-height="520"
-          data-theme="dark"
-          data-threshold="50"
-          data-chunk-size="50"
-          data-open-results="0"></script>
+  <h2>Themes, side by side</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">Light</h3>
+      <script src="https://api.proxyverity.com/widget/embed.js" async
+              data-width="100%" data-height="420" data-theme="light"></script>
+    </div>
+    <div class="card dark-stage">
+      <h3 style="margin-top:0">Dark</h3>
+      <p class="small" style="color:#9ca3af">
+        Note the credit below: it inherits this panel's text colour, so it stays readable on a
+        dark design without being told to.
+      </p>
+      <script src="https://api.proxyverity.com/widget/embed.js" async
+              data-width="100%" data-height="420" data-theme="dark"></script>
+    </div>
+  </div>
+
+  <h2>Every option</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Attribute</th><th>Values</th><th>Default</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>data-width</code></td><td>any CSS width; a bare number means px</td><td><code>100%</code></td><td>container width</td></tr>
+        <tr><td><code>data-height</code></td><td>px or percent</td><td><code>520</code></td><td>starting height; the widget then resizes itself</td></tr>
+        <tr><td><code>data-theme</code></td><td><code>light</code>, <code>dark</code>, <code>auto</code></td><td><code>light</code></td><td><code>auto</code> follows the visitor's OS setting</td></tr>
+        <tr><td><code>data-accent</code></td><td><code>#rgb</code>, <code>#rrggbb</code></td><td><code>#2563eb</code></td><td>button and links</td></tr>
+        <tr><td><code>data-bg</code></td><td><code>#rgb</code>, <code>#rrggbb</code>, <code>transparent</code></td><td>theme's</td><td>background</td></tr>
+        <tr><td><code>data-fg</code></td><td><code>#rgb</code>, <code>#rrggbb</code></td><td>theme's</td><td>main text</td></tr>
+        <tr><td><code>data-border</code></td><td><code>#rgb</code>, <code>#rrggbb</code></td><td>theme's</td><td>field and panel borders</td></tr>
+        <tr><td><code>data-radius</code></td><td><code>0</code>–<code>24</code></td><td><code>6</code></td><td>corner radius in px</td></tr>
+        <tr><td><code>data-font</code></td><td><code>system</code>, <code>sans</code>, <code>serif</code>, <code>mono</code></td><td><code>sans</code></td><td>typeface</td></tr>
+        <tr><td><code>data-threshold</code></td><td>integer</td><td><code>50</code></td><td>lists this size or smaller go in one request</td></tr>
+        <tr><td><code>data-chunk-size</code></td><td>integer</td><td><code>50</code></td><td>proxies per request for longer lists</td></tr>
+        <tr><td><code>data-open-results</code></td><td><code>1</code>, <code>0</code></td><td><code>0</code></td><td><code>1</code> opens the results page in a new tab, leaving your page where it was</td></tr>
+        <tr><td><code>data-credit</code></td><td><code>below</code>, <code>above</code></td><td><code>below</code></td><td>which side of the widget the credit sits on</td></tr>
+        <tr><td><code>data-credit-align</code></td><td><code>left</code>, <code>center</code>, <code>right</code></td><td><code>left</code></td><td>credit alignment</td></tr>
+      </tbody>
+    </table>
+    <p class="small muted" style="margin-top:14px">
+      Colours must be hex — <code>#ff8800</code> or <code>#f80</code>. Named colours and
+      <code>rgb()</code> are not accepted, and anything we cannot read is replaced by the
+      theme's own value, so a typo leaves you with a working widget rather than a broken one.
+      The credit's text and destination are not attributes and will not become any.
+    </p>
+  </div>
+
+  <h2>How it behaves</h2>
+  <div class="card">
+    <ul>
+      <li>Up to <strong>1000 proxies</strong> per submission. Lists longer than
+          <code>data-threshold</code> are sent in batches of <code>data-chunk-size</code>,
+          about one batch per second, with progress shown as they go.</li>
+      <li>Results open on <code>/result.php?hash=…</code> — its own address, so it can be
+          bookmarked or shared. The widget does not render results row by row.</li>
+      <li>Checking happens on our servers, so your visitors' browsers never connect to the
+          proxies they are testing.</li>
+      <li>The widget runs in a sandboxed iframe and reports only its own height back to your
+          page. Your page sends it nothing.</li>
+      <li>If a visitor goes faster than the service allows, they see a short wait message and
+          the widget retries by itself.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    Built by <a href="https://proxyverity.com/">ProxyVerity</a> ·
+    <a href="https://proxyverity.com/proxy-checker-widget/">documentation</a> ·
+    <a href="https://proxyverity.com/proxy-checker/">hosted proxy checker</a> ·
+    <a href="https://proxyverity.com/free-proxy-list/">free proxy list</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var LOADER = 'https://api.proxyverity.com/widget/embed.js';
+
+  // Defaults, as the widget itself defaults. A control sitting on its default
+  // emits no attribute at all: the snippet a webmaster copies should be the
+  // short one unless they actually changed something.
+  var DEFAULTS = {
+    theme: 'light', accent: '#2563eb', bg: '#ffffff', fg: '#222222',
+    border: '#e5e7eb', radius: '6', font: 'sans', width: '100%',
+    height: '520', credit: 'below', 'credit-align': 'left'
+  };
+
+  var el = {
+    theme: document.getElementById('c-theme'),
+    accent: document.getElementById('c-accent'),
+    bg: document.getElementById('c-bg'),
+    transparent: document.getElementById('c-transparent'),
+    fg: document.getElementById('c-fg'),
+    border: document.getElementById('c-border'),
+    radius: document.getElementById('c-radius'),
+    radiusOut: document.getElementById('c-radius-out'),
+    font: document.getElementById('c-font'),
+    width: document.getElementById('c-width'),
+    height: document.getElementById('c-height'),
+    credit: document.getElementById('c-credit'),
+    creditAlign: document.getElementById('c-credit-align'),
+    snippet: document.getElementById('snippet'),
+    stage: document.getElementById('stage'),
+    copy: document.getElementById('copy'),
+    reset: document.getElementById('c-reset')
+  };
+
+  // Which colour pickers the user has actually touched. A colour input always
+  // holds some value, so "unchanged" cannot be read off the control itself.
+  var touched = {};
+
+  function attributes() {
+    var out = [];
+
+    function add(name, value, fallback) {
+      if (value !== null && value !== '' && value !== fallback) {
+        out.push(['data-' + name, value]);
+      }
+    }
+
+    add('width', el.width.value.trim(), DEFAULTS.width);
+    add('height', String(parseInt(el.height.value, 10) || DEFAULTS.height), DEFAULTS.height);
+    add('theme', el.theme.value, DEFAULTS.theme);
+
+    if (el.transparent.checked) {
+      out.push(['data-bg', 'transparent']);
+    } else if (touched.bg) {
+      add('bg', el.bg.value, DEFAULTS.bg);
+    }
+
+    if (touched.accent) add('accent', el.accent.value, DEFAULTS.accent);
+    if (touched.fg) add('fg', el.fg.value, DEFAULTS.fg);
+    if (touched.border) add('border', el.border.value, DEFAULTS.border);
+
+    add('radius', el.radius.value, DEFAULTS.radius);
+    add('font', el.font.value, DEFAULTS.font);
+    add('credit', el.credit.value, DEFAULTS.credit);
+    add('credit-align', el.creditAlign.value, DEFAULTS['credit-align']);
+
+    return out;
+  }
+
+  function renderSnippet(attrs) {
+    var lines = ['<script src="' + LOADER + '"', '        async'];
+
+    attrs.forEach(function (pair) {
+      lines.push('        ' + pair[0] + '="' + pair[1] + '"');
+    });
+
+    // Closed by concatenation so this file does not contain the literal
+    // closing tag, which would end this very script element.
+    el.snippet.textContent = lines.join('\n') + '><' + '/script>';
+  }
+
+  function renderPreview(attrs) {
+    el.stage.textContent = '';
+
+    // The loader reads its own data-* attributes and inserts the widget after
+    // its own tag, so a preview is just a fresh script element in the stage.
+    var script = document.createElement('script');
+    script.src = LOADER;
+
+    attrs.forEach(function (pair) {
+      script.setAttribute(pair[0], pair[1]);
+    });
+
+    if (!script.hasAttribute('data-height')) {
+      script.setAttribute('data-height', DEFAULTS.height);
+    }
+
+    el.stage.appendChild(script);
+  }
+
+  var timer = null;
+
+  function update() {
+    el.radiusOut.textContent = el.radius.value;
+
+    var attrs = attributes();
+    renderSnippet(attrs);
+
+    // The preview reloads the widget, so it waits for the controls to settle
+    // rather than rebuilding on every drag of the radius slider.
+    clearTimeout(timer);
+    timer = setTimeout(function () { renderPreview(attrs); }, 350);
+  }
+
+  ['accent', 'bg', 'fg', 'border'].forEach(function (name) {
+    el[name].addEventListener('input', function () {
+      touched[name] = true;
+      update();
+    });
+  });
+
+  [el.theme, el.transparent, el.radius, el.font, el.width, el.height,
+   el.credit, el.creditAlign].forEach(function (control) {
+    control.addEventListener('input', update);
+    control.addEventListener('change', update);
+  });
+
+  document.querySelectorAll('[data-clear]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var name = button.getAttribute('data-clear');
+      el[name].value = DEFAULTS[name];
+      touched[name] = false;
+      update();
+    });
+  });
+
+  el.reset.addEventListener('click', function () {
+    el.theme.value = DEFAULTS.theme;
+    el.accent.value = DEFAULTS.accent;
+    el.bg.value = DEFAULTS.bg;
+    el.fg.value = DEFAULTS.fg;
+    el.border.value = DEFAULTS.border;
+    el.radius.value = DEFAULTS.radius;
+    el.font.value = DEFAULTS.font;
+    el.width.value = DEFAULTS.width;
+    el.height.value = DEFAULTS.height;
+    el.credit.value = DEFAULTS.credit;
+    el.creditAlign.value = DEFAULTS['credit-align'];
+    el.transparent.checked = false;
+    touched = {};
+    update();
+  });
+
+  el.copy.addEventListener('click', function () {
+    var text = el.snippet.textContent;
+    var done = function () {
+      el.copy.textContent = 'Copied';
+      setTimeout(function () { el.copy.textContent = 'Copy'; }, 1600);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () {
+        el.copy.textContent = 'Select and copy';
+      });
+      return;
+    }
+
+    // Older browsers: select the snippet so Ctrl-C works.
+    var range = document.createRange();
+    range.selectNodeContents(el.snippet);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    el.copy.textContent = 'Press Ctrl-C';
+  });
+
+  update();
+})();
+</script>
+
 </body>
 </html>
