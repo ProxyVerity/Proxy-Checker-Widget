@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxy Checker Widget — light theme demo</title>
+<meta name="description" content="A live demo of the embeddable ProxyVerity proxy checker widget, running in its light theme with a custom accent colour.">
+<style>
+  :root { --ink:#1f2430; --muted:#5b6474; --line:#e3e7ee; --accent:#0f766e; --bg:#ffffff; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --ink:#e8ecf4; --muted:#9aa4b8; --line:#2a3142; --accent:#5eead4; --bg:#10131a; }
+  }
+  body { background:var(--bg); color:var(--ink); margin:0;
+         font:16px/1.65 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
+  main { max-width:48rem; margin:0 auto; padding:3rem 16px 4rem; }
+  h1 { font-size:1.9rem; line-height:1.25; margin:0 0 .6rem; letter-spacing:-.01em; }
+  h2 { font-size:1.15rem; margin:2.4rem 0 .6rem; }
+  p { color:var(--muted); margin:.7rem 0; }
+  a { color:var(--accent); }
+  .lede { font-size:1.08rem; color:var(--ink); }
+  .stage { margin:1.8rem 0; padding:1.1rem; border:1px solid var(--line); border-radius:12px; }
+  pre { background:rgba(127,127,127,.08); border:1px solid var(--line); border-radius:10px;
+        padding:.9rem 1rem; overflow-x:auto; font-size:.85rem; }
+  footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
+           font-size:.9rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>A proxy checker that lives on your page</h1>
+  <p class="lede">This is one script tag, running live. Paste a few proxies below and
+  they are checked against HTTP, SOCKS4 and SOCKS5 — whichever answers first wins.</p>
+
+  <div class="stage">
+    <script src="https://api.proxyverity.com/widget/embed.js"
+            async
+            data-width="100%"
+            data-height="520"
+            data-theme="light"
+            data-accent="#0f766e"
+            data-radius="10"
+            data-font="system"></script>
+  </div>
+
+  <h2>What this particular demo shows</h2>
+  <p>The widget takes its colours from attributes, so it does not have to look like
+  somebody else's product on your site. This page uses a teal accent, a ten-pixel radius
+  and the system typeface. Nothing was styled by hand — those are three attributes.</p>
+
+  <pre>&lt;script src="https://api.proxyverity.com/widget/embed.js"
+        async
+        data-theme="light"
+        data-accent="#0f766e"
+        data-radius="10"
+        data-font="system"&gt;&lt;/script&gt;</pre>
+
+  <p>Colours are validated server-side: anything that is not a plain hex value falls back
+  to the theme's own, because these end up inside a stylesheet. The palette carries over
+  to the results page too, so the look does not break at the moment a visitor is reading
+  their results.</p>
+
+  <h2>Where the rest lives</h2>
+  <p>The snippet builder, with every option and a live preview, is on the
+  <a href="https://proxyverity.github.io/Proxy-Checker-Widget/">showcase page</a>.
+  Full reference documentation is at
+  <a href="https://proxyverity.com/proxy-checker-widget/">proxyverity.com/proxy-checker-widget</a>,
+  and the hosted checker — the same engine, without embedding anything — is at
+  <a href="https://proxyverity.com/proxy-checker/">proxyverity.com/proxy-checker</a>.</p>
+
+  <p>Source: <a href="https://gitlab.com/ProxyVerity/proxy-checker-widget">GitLab</a> ·
+  <a href="https://github.com/ProxyVerity/Proxy-Checker-Widget">GitHub</a> ·
+  npm <code>proxyverity-widget</code> · Packagist <code>proxyverity/proxy-checker-widget</code></p>
+
+  <footer>
+    Free to embed. The one condition is that the credit line under the widget stays
+    visible — it is the only thing the widget asks for.
+    Built by <a href="https://proxyverity.com/">ProxyVerity</a>.
+  </footer>
+</main>
+</body>
+</html>

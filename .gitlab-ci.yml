@@ -1,0 +1,14 @@
+# GitLab Pages: publishes demos/gitlab/ as the site root.
+# Deliberately a different page from the GitHub Pages showcase — ten copies of
+# one page on ten subdomains is one asset, not ten.
+pages:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - mkdir -p public
+    - cp demos/gitlab/index.html public/index.html
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
