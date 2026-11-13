@@ -23,6 +23,12 @@
         padding:.9rem 1rem; overflow-x:auto; font-size:.85rem; }
   footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line);
            font-size:.9rem; color:var(--muted); }
+  /* Защита от переполнения на узких экранах: content-box плюс широкий <pre>
+     или длинный URL — классическая причина бокового скролла. */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { overflow-wrap: break-word; }
+  pre { max-width: 100%; overflow-x: auto; }
+  img, iframe, svg { max-width: 100%; }
 </style>
 </head>
 <body>
