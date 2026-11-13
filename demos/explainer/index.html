@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxy Checker Widget — how the checking works</title>
+<meta name="description" content="A live embeddable proxy checker, and a short explanation of what it actually does: three protocols tried at once, first to answer wins.">
+<style>
+  :root { --bg:#0d1117; --ink:#e6edf3; --muted:#8b949e; --line:#232c38; --accent:#f0883e; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) { --bg:#fbfbfa; --ink:#1c1f24; --muted:#60666e; --line:#e4e4e1; --accent:#b4530a; }
+  }
+  body { background:var(--bg); color:var(--ink); margin:0;
+         font:16px/1.7 "Iowan Old Style",Georgia,"Times New Roman",serif; }
+  main { max-width:44rem; margin:0 auto; padding:3.5rem 16px 4rem; }
+  h1 { font-size:2rem; line-height:1.2; margin:0 0 .5rem; font-weight:600; }
+  h2 { font-size:1.1rem; margin:2.6rem 0 .5rem; font-weight:600;
+       text-transform:uppercase; letter-spacing:.07em; color:var(--muted); }
+  p { color:var(--ink); margin:.8rem 0; }
+  .muted { color:var(--muted); }
+  a { color:var(--accent); }
+  .stage { margin:2rem 0; padding:1rem; border:1px solid var(--line); border-radius:4px; }
+  ul { padding-left:1.1rem; } li { margin:.4rem 0; }
+  footer { margin-top:3.5rem; padding-top:1.2rem; border-top:1px solid var(--line);
+           font-size:.92rem; color:var(--muted); }
+  code { font:0.86em ui-monospace,SFMono-Regular,Menlo,monospace;
+         background:rgba(127,127,127,.14); padding:.1em .35em; border-radius:3px; }
+  /* Защита от переполнения на узких экранах: content-box плюс широкий <pre>
+     или длинный URL — классическая причина бокового скролла. */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { overflow-wrap: break-word; }
+  pre { max-width: 100%; overflow-x: auto; }
+  img, iframe, svg { max-width: 100%; }
+</style>
+</head>
+<body>
+<main>
+  <h1>What happens when you check a proxy</h1>
+  <p class="muted">A working checker, embedded below, and a short account of what it
+  does once you press the button. Free to put on your own page.</p>
+
+  <div class="stage">
+    <script src="https://api.proxyverity.com/widget/embed.js"
+            async
+            data-width="100%"
+            data-height="520"
+            data-theme="dark"
+            data-accent="#f0883e"
+            data-radius="4"></script>
+  </div>
+
+  <h2>Three protocols, not one</h2>
+  <p>An address and a port tell you nothing about what speaks on the other end. The same
+  <code>1.2.3.4:8080</code> might be HTTP, SOCKS4 or SOCKS5, and a list that labels them
+  is often guessing. So all three are tried, and whichever answers first decides what the
+  proxy is.</p>
+
+  <h2>Anonymity is measured, not declared</h2>
+  <p>Whether a proxy is transparent, anonymous or elite is not a property it advertises —
+  it is what the far end actually sees. The check goes through the proxy to a judge that
+  reports the headers it received, and the level follows from which of them survived the
+  trip.</p>
+
+  <h2>Why free proxy lists overstate themselves</h2>
+  <p>A list is a snapshot, and public proxies die quickly — by the time a page is
+  indexed, much of it is already wrong. The only honest number is the one you measure
+  yourself, which is what this tool is for.</p>
+
+  <h2>Putting it on your page</h2>
+  <p>One script tag, no server, no account. Colours, theme, corner radius and typeface
+  are attributes, so it can be made to look like your site rather than ours. The
+  <a href="https://proxyverity.github.io/Proxy-Checker-Widget/">snippet builder</a> has a
+  live preview, and the
+  <a href="https://proxyverity.com/proxy-checker-widget/">reference documentation</a>
+  lists every option.</p>
+  <ul>
+    <li>Hosted checker, nothing to embed: <a href="https://proxyverity.com/proxy-checker/">proxyverity.com/proxy-checker</a></li>
+    <li>Free proxy list, re-checked continuously: <a href="https://proxyverity.com/free-proxy-list/">proxyverity.com/free-proxy-list</a></li>
+    <li>Source: <a href="https://github.com/ProxyVerity/Proxy-Checker-Widget">GitHub</a>, package <code>proxyverity-widget</code> on npm</li>
+  </ul>
+
+  <footer>
+    The one condition for embedding is that the credit line under the widget stays
+    visible. Built by <a href="https://proxyverity.com/">ProxyVerity</a>.
+  </footer>
+</main>
+</body>
+</html>
