@@ -97,6 +97,33 @@
   .dark-stage { background: #0b0f1a; color: #e5e7eb; border-color: #1f2937; }
   .callout { border-left: 3px solid var(--brand); padding: 2px 0 2px 14px; }
   footer { border-top: 1px solid var(--line); margin-top: 52px; padding: 26px 0 44px; font-size: 14px; color: var(--muted); }
+
+  /* --- Мобильная адаптация ---------------------------------------------
+     Три причины переполнения, в порядке влияния:
+     1. box-sizing по умолчанию content-box: поля с width:100% плюс padding
+        и border оказывались шире своей колонки;
+     2. элементы grid имеют min-width:auto, поэтому широкий <pre> со
+        сниппетом и таблица на четыре колонки не давали колонке сжаться
+        и распирали страницу целиком;
+     3. длинные URL в тексте не переносились.
+     Горизонтальный скролл НЕ прячем через overflow-x:hidden — это маскирует
+     переполнение вместо того, чтобы его чинить. */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { overflow-wrap: break-word; }
+  .builder > *, .grid2 > *, .controls > *, .field > * { min-width: 0; }
+  pre { max-width: 100%; }
+  .snippet-head { flex-wrap: wrap; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table-wrap table { min-width: 34rem; }
+  img, iframe, svg, video { max-width: 100%; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .card { padding: 16px; }
+    pre { font-size: 12px; padding: 12px; }
+    .snippet-head { gap: 8px; }
+    .pair { grid-template-columns: 1fr 64px; }
+  }
 </style>
 </head>
 <body>
@@ -265,6 +292,7 @@
 
   <h2>Every option</h2>
   <div class="card">
+    <div class="table-wrap">
     <table>
       <thead>
         <tr><th>Attribute</th><th>Values</th><th>Default</th><th>Effect</th></tr>
@@ -286,6 +314,7 @@
         <tr><td><code>data-credit-align</code></td><td><code>left</code>, <code>center</code>, <code>right</code></td><td><code>left</code></td><td>credit alignment</td></tr>
       </tbody>
     </table>
+    </div>
     <p class="small muted" style="margin-top:14px">
       Colours must be hex — <code>#ff8800</code> or <code>#f80</code>. Named colours and
       <code>rgb()</code> are not accepted, and anything we cannot read is replaced by the
